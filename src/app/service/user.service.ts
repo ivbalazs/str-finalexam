@@ -36,6 +36,9 @@ export class UserService {
    * The method is: this.http.delete
    */
 
+  remove(user: any): Observable<any> {
+    return this.http.delete(`${this.endpoint}/${user.id}`);
+  }
 
 
   /**
@@ -43,11 +46,18 @@ export class UserService {
    * The method is: this.http.post
    */
 
+  create(user: User): Observable<any> {
+    return this.http.post(this.endpoint, user);
+  }
 
 
   /**
    * Update a user in the database.
    * The method is: this.http.patch
    */
+
+  update(user: User): Observable<any> {
+    return this.http.patch(`${this.endpoint}/${user.id}`, user);
+  }
 
 }

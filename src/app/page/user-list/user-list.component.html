@@ -1,19 +1,27 @@
 <div class="row">
   <div class="col-12 mt-2">
     <h2>User List</h2>
+    <div>
+      <button [routerLink]="['user/0']" class="btn btn-success btn-block mb-3">Create User</button>
+    </div>
+    <div class="col-4">
+      <label for="name" class="mb-2">Filter:</label>
+      <input id="name" (keyup)="onFilter($event)" type="text" class="form-control mb-3" placeholder="by name">
+    </div>
+
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>#</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Address</th>
-          <th>Active</th>
+          <th (click)="onSelect('id')">#</th>
+          <th (click)="onSelect('name')">Name</th>
+          <th (click)="onSelect('email')">Email</th>
+          <th (click)="onSelect('address')">Address</th>
+          <th (click)="onSelect('active')">Active</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let user of users$ | async">
+        <tr *ngFor="let user of users$ | async | filter:filterKey | sorter:columnKey">
           <td>{{ user.id }}</td>
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
@@ -24,7 +32,7 @@
               <button [routerLink]="['user/' + user.id]" class="btn btn-info">
                 <i class="fa fa-pencil"></i>
               </button>
-              <button class="btn btn-danger">
+              <button class="btn btn-danger" (click)="onDelete(user)">
                 <i class="fa fa-trash"></i>
               </button>
             </div>
